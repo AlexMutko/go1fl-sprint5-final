@@ -1,8 +1,10 @@
 package personaldata
+
 import "fmt"
+
 type Personal struct {
 	// TODO: добавить поля
-	Name string
+	Name   string
 	Weight float64
 	Height float64
 }

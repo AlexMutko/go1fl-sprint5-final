@@ -1,7 +1,6 @@
 package actioninfo
 
 import (
-	"fmt"
 	"log"
 )
 
@@ -10,23 +9,17 @@ type DataParser interface {
 	ActionInfo() (string, error)
 }
 
-func Info(dataStrings []string, parsers []DataParser) ([]string, error) {
-	if len(dataStrings) != len(parsers) {
-		return nil, fmt.Errorf("количество строк данных (%d) не совпадает с количеством парсеров (%d)", len(dataStrings), len(parsers))
-	}
-	var results []string
-	for i := 0; i < len(dataStrings); i++ {
-		err := parsers[i].Parse(dataStrings[i])
-		if err != nil {
-			log.Printf("Ошибка парсинга строки")
+func Info(dataset []string, dp DataParser) {
+	for _, line := range dataset {
+		if err := dp.Parse(line); err != nil {
+			log.Printf("ошибка при разборе строки")
 			continue
 		}
-		report, err := parsers[i].ActionInfo()
+		infoStr, err := dp.ActionInfo()
 		if err != nil {
-			log.Printf("Ошибка формирования отчёта")
+			log.Printf("ошибка при формировании информации об активности")
 			continue
 		}
-		results = append(results, report)
+		log.Println(infoStr)
 	}
-	return results, nil
 }

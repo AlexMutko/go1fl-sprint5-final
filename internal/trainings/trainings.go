@@ -28,7 +28,7 @@ func (t *Training) Parse(datastring string) (err error) {
 	if err != nil {
 		return fmt.Errorf("неверное значение шагов")
 	}
-	if steps < 0 {
+	if steps <= 0 {
 		return fmt.Errorf("количество шагов не может быть отрицательным")
 	}
 	t.Steps = steps
@@ -37,7 +37,7 @@ func (t *Training) Parse(datastring string) (err error) {
 	if err != nil {
 		return fmt.Errorf("неверное значение длительности")
 	}
-	if duration < 0 {
+	if duration <= 0 {
 		return fmt.Errorf("длительность тренировки не может быть отрицательной")
 	}
 	t.Duration = duration
@@ -67,7 +67,7 @@ func (t Training) ActionInfo() (string, error) {
 			"Длительность: %.2f ч.\n"+
 			"Дистанция: %.2f км.\n"+
 			"Скорость: %.2f км/ч\n"+
-			"Сожгли калорий: %.2f",
+			"Сожгли калорий: %.2f\n",
 		t.TrainingType,
 		durationHours,
 		distance,
